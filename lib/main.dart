@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fpa/views/login.dart';
+import 'package:fpa/core/routes/routes.dart';
+import 'package:fpa/views/LoginScreen/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,10 +13,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Login App',
+      initialRoute: '/login',
+      routes: loadRoutes(context),
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: LoginScreen(),
     );
   }
 }

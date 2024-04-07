@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fpa/core/widgets/AppIcon/icon.dart';
+import 'package:fpa/shared/widgets/Buttons/DefaultButton.dart';
+import 'package:fpa/shared/widgets/Buttons/SecondButton.dart';
+import 'package:fpa/shared/widgets/Inputs/AppInput.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -8,47 +12,37 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset('assets/image/logo_fpa.png', width: 300, height: 300),
+            AppIcon(),
             SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Login/E-mail',
-                ),
+              child: AppInput(
+                hintText: "Login/E-mail",
               ),
             ),
             SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: TextFormField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                ),
+              child: AppInput(
+                hintText: "Password",
               ),
             ),
             SizedBox(height: 20),
-            FilledButton(
+            DefaultButton(
               onPressed: () {
                 // Autenticação do Firebase aqui
               },
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Text(
-                  'Sign in',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
+              text: 'Sign in',
             ),
             SizedBox(height: 20),
-            OutlinedButton.icon(
+            SecondButton(
+              padding: "8",
               onPressed: () async {
                 // Autenticação com o Google aqui
               },
-              icon: Icon(Icons.account_circle),
-              label: Text('Conectar com Google'),
-            ),
+              icon: Icons.account_circle,
+              text: 'Conectar com Google',
+            )
           ],
         ),
       ),
