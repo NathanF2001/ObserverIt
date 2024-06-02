@@ -1,13 +1,20 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AppIcon extends StatelessWidget {
   const AppIcon({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    const String svgPath = 'assets/icon/Logo.svg';
+
     return Padding(
       padding: EdgeInsets.zero,
-      child: Image.asset('assets/image/logo_fpa.png', width: 300, height: 300),
+      child: SvgPicture.asset(
+          svgPath,
+          semanticsLabel: 'ObserverIt Logo'
+      )
     );
   }
 }

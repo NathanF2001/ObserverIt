@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fpa/shared/widgets/Buttons/ConfigurePaddingSizes.dart';
+import 'package:observerit/shared/widgets/Buttons/ConfigurePaddingSizes.dart';
 
 class DefaultButton extends StatelessWidget {
 
@@ -20,7 +20,7 @@ class DefaultButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    Color color = Theme.of(context).primaryColorDark;
     var [top,right,bottom,left] = configurePaddingSizes(padding);
 
     FilledButton loadWidget;
@@ -28,6 +28,7 @@ class DefaultButton extends StatelessWidget {
     if (icon == null) {
       loadWidget = FilledButton(
         onPressed: onPressed,
+        style: FilledButton.styleFrom(backgroundColor: color),
         child: Padding(
           padding: EdgeInsets.fromLTRB(left,top,right,bottom),
           child: Text(

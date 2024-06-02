@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fpa/shared/widgets/Buttons/ConfigurePaddingSizes.dart';
+import 'package:observerit/shared/widgets/Buttons/ConfigurePaddingSizes.dart';
 
 class SecondButton extends StatelessWidget {
 
