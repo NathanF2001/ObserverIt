@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:observerit/core/services/ViewService.dart';
 import 'package:observerit/entities/User.dart';
 import 'package:observerit/entities/View.dart';
+import 'package:observerit/shared/widgets/Dialog/DefaultDialog.dart';
 import 'package:observerit/views/CreateView/CreateView.dart';
 import 'package:observerit/views/HomePage/SideMenu.dart';
 import 'package:observerit/views/HomePage/widgets/CardView.dart';
@@ -16,20 +17,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final ViewObserverItService viewObserverItService = ViewObserverItService();
+  List<ViewObserverIt> views = [];
+  Future<void>? fetchViews = null;
+  final user = User.fromJson({
+    "username": "Joe Doe",
+    "imageUrl": null,
+    "id": 1,
+    "email": "joedoe@gmail.com"
+  });
 
+  @override
+  void initState() {
+    super.initState();
+
+    fetchViews = viewObserverItService.getViewFromUser(user).then( (response) {
+      views = response;
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    final ViewObserverItService viewObserverItService = ViewObserverItService();
-
     //final user = ModalRoute.of(context)!.settings.arguments as User;
-    final user = User.fromJson({
-      "username": "Joe Doe",
-      "imageUrl": null,
-      "id": 1,
-      "email": "joedoe@gmail.com"
-    });
 
     return Scaffold(
       appBar: AppBar(
@@ -44,25 +55,30 @@ class _HomePageState extends State<HomePage> {
         style: ButtonStyle(
           backgroundColor: MaterialStateColor.resolveWith((states) => Theme.of(context).primaryColor),
         ),
-        onPressed: () {
-          Navigator.of(context).push(
+        onPressed: () async {
+          ViewObserverIt? view = await Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => const CreateView(),
             ),
           );
+
+          if (view != null) {
+            setState(() {
+              views = [view,...views];
+            });
+            DefaultDialog.build(context, "Created", "Your View has been created successfully!");
+          }
         },
       ),
       drawer: SideMenu(user: user),
       body: FutureBuilder(
-          future: viewObserverItService.getViewFromUser(user),
+          future: fetchViews,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting || snapshot.connectionState == ConnectionState.none) {
               return Center(
                 child: CircularProgressIndicator(),
               );
             } else {
-              final List<ViewObserverIt> views = snapshot.data!;
-
               return ListView(
                 children: [
                   SizedBox(height: 20,),

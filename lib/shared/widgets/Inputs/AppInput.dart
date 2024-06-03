@@ -10,6 +10,7 @@ class AppInput extends StatelessWidget {
   TextEditingController? controller;
   bool obscureText;
   TextInputType keyboardType;
+  ValueChanged<String>? onChanged;
 
   AppInput(
       {super.key,
@@ -18,6 +19,7 @@ class AppInput extends StatelessWidget {
       this.validator,
       this.onSaved,
       this.controller,
+        this.onChanged,
       this.obscureText = false,
       this.keyboardType = TextInputType.text});
 
@@ -31,6 +33,7 @@ class AppInput extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       keyboardType: keyboardType,
+      onChanged: onChanged,
       decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: labelText,
