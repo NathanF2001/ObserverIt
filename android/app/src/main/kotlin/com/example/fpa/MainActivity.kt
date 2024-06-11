@@ -1,4 +1,4 @@
-package com.example.fpa
+package com.observerit
 
 import io.flutter.embedding.android.FlutterActivity
 

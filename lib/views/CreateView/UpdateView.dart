@@ -20,7 +20,6 @@ class CreateView extends StatefulWidget {
 
 class _CreateViewState extends State<CreateView> {
   final aliasControl = TextEditingController();
-  final urlControl = TextEditingController();
   final periodControl = TextEditingController();
   final periodTypeControl = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -193,7 +192,7 @@ class _CreateViewState extends State<CreateView> {
                                   })
                                 ],
                                 "statistics": StatisticsView.fromJson({
-                                  "average": urlResponse!.timeMS!.toDouble(),
+                                  "average": urlResponse!.timeMS,
                                   "peak": urlResponse!.timeMS,
                                   "uptime": 0,
                                   "lastUpdate": urlResponse!.runDate

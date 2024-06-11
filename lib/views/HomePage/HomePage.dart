@@ -9,7 +9,6 @@ import 'package:observerit/views/HomePage/widgets/CardView.dart';
 
 class HomePage extends StatefulWidget {
 
-
   HomePage({super.key});
 
   @override

@@ -1,5 +1,5 @@
 class StatisticsView {
-  int? average;
+  double? average;
   int? peak;
   int? uptime;
   DateTime? lastUpdate;

@@ -14,7 +14,7 @@ class ViewObserverItService {
       List<ViewObserverIt> views = [
         {
           "alias": "UFRPE",
-          "url": "www.ufrpe.br",
+          "url": "https://www.ufrpe.br/",
           "verificationPeriod": 84600
         },
         {
@@ -23,7 +23,7 @@ class ViewObserverItService {
           "verificationPeriod": 84600
         },
       ].map((jsonValue) {
-        int average = Random().nextInt(1000);
+        double average = Random().nextInt(1000).toDouble();
         return ViewObserverIt.fromJson({
           ...jsonValue,
           "requests": List.filled(20, null).mapIndexed((index, request) {
@@ -38,7 +38,7 @@ class ViewObserverItService {
           }).toList(),
           "statistics": StatisticsView.fromJson({
             "average": average,
-            "peak": average + Random().nextInt(100) ,
+            "peak": average.toInt() + Random().nextInt(100) ,
             "uptime": Random().nextInt(300),
             "lastUpdate": DateTime.now()
           })
