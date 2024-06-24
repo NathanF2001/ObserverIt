@@ -117,10 +117,10 @@ class ViewObserverItService {
     }
   }
 
-  updateNextExecutation(DocumentReference viewReference, DateTime nextExecutation) async {
+  updateNextExecutation(DocumentReference viewReference, DateTime nextExecution) async {
 
     await viewReference.update({
-      "nextExecutation": nextExecutation
+      "nextExecution": nextExecution
     });
   }
 

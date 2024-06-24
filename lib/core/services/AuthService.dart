@@ -81,6 +81,42 @@ class AuthService {
     }
   }
 
+  Future<void> updatePhoto(String urlPhoto) async {
+    try {
+
+      User? user = firebaseInstance.currentUser;
+
+      await user!.updatePhotoURL(urlPhoto);
+
+    } catch (error) {
+      throw const AuthException('Error to change photo, try later');
+    }
+  }
+
+  Future<void> updateUsername(String username) async {
+    try {
+
+      User? user = firebaseInstance.currentUser;
+
+      await user!.updateDisplayName(username);
+
+    } catch (error) {
+      throw const AuthException('Error to change username, try later');
+    }
+  }
+
+  Future<void> changePassword(String newPassword) async {
+    try {
+
+      User? user = firebaseInstance.currentUser;
+
+      await user!.updatePassword(newPassword);
+
+    } catch (error) {
+      throw const AuthException('Error to change password, try later');
+    }
+  }
+
   Future<void> logout() async {
     try {
       this.firebaseInstance.signOut();

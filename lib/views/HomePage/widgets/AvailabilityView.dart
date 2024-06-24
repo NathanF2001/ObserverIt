@@ -32,7 +32,7 @@ class AvailabilityView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            child: Text("Availability", textAlign: TextAlign.start, style: TextStyle(color: Colors.black45),),
+            child: Text("Availability History", textAlign: TextAlign.start, style: TextStyle(color: Colors.black45),),
             alignment: Alignment.centerLeft,
           ),
           SizedBox(height: 15,),

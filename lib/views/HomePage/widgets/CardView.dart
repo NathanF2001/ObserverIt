@@ -21,7 +21,7 @@ class _CardViewState extends State<CardView> {
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: InkWell(
         onTap: () async {
-          String status = await Navigator.of(context).push(
+          String? status = await Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => ViewObserverScreen(viewObserverIt: widget.view),
             ),
@@ -56,7 +56,7 @@ class _CardViewState extends State<CardView> {
                   icon: Icons.update),
               InformationViewCard(
                   title: "Average Time",
-                  value: widget.view.statistics!.average.toString() + "ms",
+                  value: widget.view.statistics!.average!.toStringAsFixed(2) + "ms",
                   icon: Icons.timelapse),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),

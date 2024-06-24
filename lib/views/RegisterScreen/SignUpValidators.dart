@@ -26,8 +26,8 @@ class SignUpValidators {
 
     if (value == null || value.isEmpty) {
       return 'Password is empty';
-    } else if (value.length < 5) {
-      return 'Password must contain 5 characters';
+    } else if (value.length < 6) {
+      return 'Password must contain 6 characters';
     }
 
     return null;

@@ -28,7 +28,6 @@ class DefaultButton extends StatelessWidget {
     if (icon == null) {
       loadWidget = FilledButton(
         onPressed: onPressed,
-
         style: FilledButton.styleFrom(backgroundColor: color),
         child: Padding(
           padding: EdgeInsets.fromLTRB(left,top,right,bottom),

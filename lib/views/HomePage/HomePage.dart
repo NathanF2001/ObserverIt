@@ -94,12 +94,21 @@ class _HomePageState extends State<HomePage> {
                   child: CircularProgressIndicator(),
                 );
               } else {
-                return ListView(
-                  children: [
-                    SizedBox(height: 20,),
-                    ...views.map((view) => CardView(view: view, updateViews: _updateViews))
-                  ],
-                );
+                if (views.length == 0) {
+                  return Expanded(
+                    child: Center(
+                      child: Text("No Views", style: TextStyle(fontSize: 24, color: Colors.grey),),
+                    ),
+                  );
+                } else {
+                  return ListView(
+                    children: [
+                      SizedBox(height: 20,),
+                      ...views.map((view) => CardView(view: view, updateViews: _updateViews))
+                    ],
+                  );
+                }
+
               }
             }),
       ),

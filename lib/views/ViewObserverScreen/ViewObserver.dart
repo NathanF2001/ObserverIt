@@ -15,6 +15,9 @@ import 'dart:math';
 import 'package:observerit/shared/widgets/Dialog/DefaultDialog.dart';
 import 'package:observerit/shared/widgets/Dialog/LoadingDialog.dart';
 import 'package:observerit/views/CreateView/UpdateView.dart';
+import 'package:observerit/views/ViewObserverScreen/widgets/CardRequestAvailability.dart';
+import 'package:observerit/views/ViewObserverScreen/widgets/CardUrlView.dart';
+import 'package:observerit/views/ViewObserverScreen/widgets/RequestHistoryStatistics.dart';
 
 class ViewObserverScreen extends StatefulWidget {
   ViewObserverIt viewObserverIt;
@@ -85,74 +88,73 @@ class _ViewObserverScreenState extends State<ViewObserverScreen> {
   Widget build(BuildContext context) {
     final String nameScreen = viewObserverIt.alias!;
 
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(nameScreen),
-          foregroundColor: Colors.white,
-          backgroundColor: Theme.of(context).primaryColor,
-          actions: [
-            IconButton(onPressed: () async{
-              final updatePage = await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => UpdateView(view: widget.viewObserverIt,),
-                ),
-              );
-
-              if (updatePage == "UPDATE") {
-                setState(() {
-
-                });
-              } else if (updatePage == "DELETE") {
-                Navigator.of(context).pop("DELETE");
-              }
-            }, icon: Icon(Icons.settings))
-          ],
-        ),
-        body: SafeArea(
-          child: Container(
-            width: double.infinity,
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: DefaultButton(
-                    text: "Run one request now",
-                    onPressed: () async {
-
-                      try {
-                        UrlResponse urlResponse = await makeRequest(context);
-
-                        Request request = Request.fromJson({
-                          "status": urlResponse.statusCode == 200
-                              ? "Available"
-                              : "Error",
-                          "date": urlResponse.runDate,
-                          "time": urlResponse.timeMS
-                        });
-
-                        await addRequest(request);
-
-                        viewObserverIt.requests!.add(request);
-
-                        if (viewObserverIt.requests!.length > 20) {
-                          viewObserverIt.requests = viewObserverIt.requests!.sublist(1);
-                        }
-
-                        DefaultDialog.build(context, "Request Success", "The request was successful!");
-                      } on RequestException catch (error) {
-                        DefaultDialog.build(context, "Request Failed", error.message);
-                      }
-                    },
+    return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(nameScreen),
+            foregroundColor: Colors.white,
+            backgroundColor: Theme.of(context).primaryColor,
+            actions: [
+              IconButton(onPressed: () async{
+                final updatePage = await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => UpdateView(view: widget.viewObserverIt,),
                   ),
-                ),
-                Expanded(
-                  child: Center(
-                    child: Text("WIP", style: TextStyle(fontSize: 24, color: Colors.grey),),
-                  ),
-                )
-              ],
-            ),
+                );
+
+                if (updatePage == "UPDATE") {
+                  setState(() {
+
+                  });
+                } else if (updatePage == "DELETE") {
+                  Navigator.of(context).pop("DELETE");
+                }
+              }, icon: Icon(Icons.settings))
+            ],
           ),
-        ));
+          body: ListView(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(16),
+                child: DefaultButton(
+                  text: "Run one request now",
+                  onPressed: () async {
+
+                    try {
+                      UrlResponse urlResponse = await makeRequest(context);
+
+                      Request request = Request.fromJson({
+                        "status": urlResponse.statusCode == 200
+                            ? "Available"
+                            : "Error",
+                        "date": urlResponse.runDate,
+                        "time": urlResponse.timeMS
+                      });
+
+                      await addRequest(request);
+
+                      viewObserverIt.requests!.add(request);
+
+                      if (viewObserverIt.requests!.length > 20) {
+                        viewObserverIt.requests = viewObserverIt.requests!.sublist(1);
+                      }
+
+                      DefaultDialog.build(context, "Request Success", "The request was successful!");
+                    } on RequestException catch (error) {
+                      DefaultDialog.build(context, "Request Failed", error.message);
+                    }
+                  },
+                ),
+              ),
+              CardUrlView(view: viewObserverIt),
+              SizedBox(height: 20,),
+              CardRequestAvailability(view: viewObserverIt,),
+              SizedBox(height: 20,),
+              RequestHistoryStatistics(requests: viewObserverIt.requests!, statistics: viewObserverIt.statistics!,),
+              SizedBox(height: 20,),
+
+            ],
+          )),
+    );
   }
 }
