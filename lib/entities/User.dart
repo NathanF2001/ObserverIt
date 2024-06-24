@@ -1,16 +1,18 @@
-class User {
+class UserObserverIt {
   String? username;
   String? imageUrl;
-  int? id;
+  String? id;
   String? email;
+  bool? isFromGoogleAuth;
 
-  User({this.username, this.imageUrl, this.id, this.email});
+  UserObserverIt({this.username, this.imageUrl, this.id, this.email, this.isFromGoogleAuth});
 
-  User.fromJson(Map<String, dynamic> json) {
+  UserObserverIt.fromJson(Map<String, dynamic> json) {
     username = json['username'];
     imageUrl = json['imageUrl'];
     id = json['id'];
     email = json['email'];
+    isFromGoogleAuth = json['isFromGoogleAuth'];
   }
 
   Map<String, dynamic> toJson() {
@@ -19,6 +21,7 @@ class User {
     data['imageUrl'] = this.imageUrl;
     data['id'] = this.id;
     data['email'] = this.email;
+    data['isFromGoogleAuth'] = this.isFromGoogleAuth;
     return data;
   }
 }

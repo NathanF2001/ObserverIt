@@ -14,6 +14,7 @@ class LoadingDialog {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircularProgressIndicator(),
+                  SizedBox(height: 30,),
                   Text(message)
                 ],
               ),

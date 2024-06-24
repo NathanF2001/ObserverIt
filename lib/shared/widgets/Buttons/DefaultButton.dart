@@ -35,6 +35,7 @@ class DefaultButton extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(fontSize: 18),
+            textAlign: TextAlign.center,
           ),
         ),
       );
@@ -47,6 +48,7 @@ class DefaultButton extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(fontSize: fontSize),
+            textAlign: TextAlign.center,
           ),
         ),
       );

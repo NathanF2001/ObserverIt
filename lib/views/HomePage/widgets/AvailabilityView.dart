@@ -10,8 +10,10 @@ class AvailabilityView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    while (requests.length < 20) {
-      requests.add(Request.fromJson({
+    List<Request> localRequests = [...requests];
+
+    while (localRequests.length < 20) {
+      localRequests.insert(0,Request.fromJson({
         "status": "Empty",
         "time": 0,
         "date": DateTime.now()
@@ -37,7 +39,7 @@ class AvailabilityView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              ...requests.map((request) => Container(
+              ...localRequests.map((request) => Container(
                 decoration: BoxDecoration(
                     color: color_map[request.status],
                     borderRadius: BorderRadius.all(Radius.circular(50))

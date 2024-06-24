@@ -5,9 +5,10 @@ import 'package:observerit/views/HomePage/widgets/InformationViewCard.dart';
 import 'package:observerit/views/ViewObserverScreen/ViewObserver.dart';
 
 class CardView extends StatefulWidget {
+  final Function updateViews;
   ViewObserverIt view;
 
-  CardView({super.key, required this.view});
+  CardView({super.key, required this.view, required this.updateViews});
 
   @override
   State<CardView> createState() => _CardViewState();
@@ -20,11 +21,15 @@ class _CardViewState extends State<CardView> {
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: InkWell(
         onTap: () async {
-          await Navigator.of(context).push(
+          String status = await Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => ViewObserverScreen(viewObserverIt: widget.view),
             ),
           );
+
+          if (status == "DELETE") {
+            widget.updateViews();
+          }
 
           setState(() {
 
@@ -47,7 +52,7 @@ class _CardViewState extends State<CardView> {
               AvailabilityView(requests: widget.view.requests!),
               InformationViewCard(
                   title: "Request Uptime",
-                  value: widget.view.statistics!.uptime.toString() + " days",
+                  value: widget.view.statistics!.createTime!.difference(DateTime.timestamp()).inDays.toString() + " days",
                   icon: Icons.update),
               InformationViewCard(
                   title: "Average Time",

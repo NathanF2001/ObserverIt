@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:observerit/core/services/AuthService.dart';
 import 'package:observerit/entities/RegisterFormInputs.dart';
 import 'package:observerit/shared/widgets/Buttons/DefaultButton.dart';
+import 'package:observerit/shared/widgets/Dialog/DefaultDialog.dart';
 import 'package:observerit/shared/widgets/Inputs/AppInput.dart';
 import 'package:observerit/views/RegisterScreen/SignUpValidators.dart';
 import 'package:observerit/core/exceptions/AuthException.dart';
@@ -126,11 +127,9 @@ class RegisterScreen extends StatelessWidget {
                                     await authService.createUser(inputForm);
 
                                       Navigator.pop(context);
-                                  } on AuthException {
-                                    print('erro esperado');
-                                  } catch (error) {
-                                    print(error);
-                                }
+                                  } on AuthException catch (error) {
+                                    DefaultDialog.build(context, 'Error to Sign In', error.message);
+                                  }
                                 }
                               },
                               text: 'Sign Up',

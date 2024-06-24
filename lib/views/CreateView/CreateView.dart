@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:observerit/core/helpers/ViewUtils.dart';
 import 'package:observerit/core/services/URLRequesterService.dart';
 import 'package:observerit/core/services/ViewService.dart';
 import 'package:observerit/entities/Request.dart';
 import 'package:observerit/entities/StatisticsView.dart';
 import 'package:observerit/entities/UrlResponse.dart';
+import 'package:observerit/entities/User.dart';
 import 'package:observerit/entities/View.dart';
 import 'package:observerit/shared/widgets/Buttons/DefaultButton.dart';
 import 'package:observerit/shared/widgets/Buttons/SecondButton.dart';
@@ -12,13 +15,19 @@ import 'package:observerit/shared/widgets/Inputs/AppInput.dart';
 import 'package:observerit/views/CreateView/CreateViewValidators.dart';
 
 class CreateView extends StatefulWidget {
-  const CreateView({super.key});
+
+  UserObserverIt user;
+
+  CreateView({super.key, required this.user});
 
   @override
   State<CreateView> createState() => _CreateViewState();
 }
 
 class _CreateViewState extends State<CreateView> {
+
+  UserObserverIt get user => widget.user;
+
   final aliasControl = TextEditingController();
   final urlControl = TextEditingController();
   final periodControl = TextEditingController();
@@ -167,14 +176,8 @@ class _CreateViewState extends State<CreateView> {
                           final bool? isValid =
                               _formKey.currentState?.validate();
                           if (isValid!) {
-                            int factor = 1;
 
-                            String typePeriod = periodTypeControl.text;
-                            if (typePeriod == "Days") {
-                              factor = 24;
-                            } else if (typePeriod == "Weeks") {
-                              factor = 168;
-                            }
+                            int totalHoursPeriod = ViewUtils.getTotalHoursPeriod( int.parse(periodControl.text), periodTypeControl.text);
 
                             ViewObserverIt view =
                                 await viewObserverItService.createView(
@@ -182,7 +185,8 @@ class _CreateViewState extends State<CreateView> {
                                 "alias": aliasControl.text,
                                 "url": urlControl.text,
                                 "verificationPeriod":
-                                    int.parse(periodControl.text) * factor,
+                                  totalHoursPeriod,
+                                "nextExecution": DateTime.timestamp().add(Duration(hours: totalHoursPeriod)),
                                 "requests": [
                                   Request.fromJson({
                                     "status": urlResponse!.statusCode == 200
@@ -196,9 +200,12 @@ class _CreateViewState extends State<CreateView> {
                                   "average": urlResponse!.timeMS!.toDouble(),
                                   "peak": urlResponse!.timeMS,
                                   "uptime": 0,
-                                  "lastUpdate": urlResponse!.runDate
+                                  "lastUpdate": urlResponse!.runDate,
+                                  "createTime": urlResponse!.runDate,
+                                  "total": 1
                                 })
                               }),
+                                  user
                             );
 
                             Navigator.of(context).pop(view);
