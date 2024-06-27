@@ -94,7 +94,7 @@ class _AgentRequestCardState extends State<AgentRequestCard> {
                           ),
                         ),
                         SizedBox(height: 10,),
-                        Text("Time Last Content",style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),),
+                        Text("Time Last Content",style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white,), textAlign: TextAlign.center,),
                         SizedBox(height: 20,),
                         Text(_formatDate(agent!.lastUpdate!), style: TextStyle(fontSize: 16,  color: Colors.white),)
                       ],

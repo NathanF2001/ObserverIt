@@ -52,7 +52,7 @@ class _CardViewState extends State<CardView> {
               AvailabilityView(requests: widget.view.requests!),
               InformationViewCard(
                   title: "Request Uptime",
-                  value: widget.view.statistics!.createTime!.difference(DateTime.timestamp()).inDays.toString() + " days",
+                  value: DateTime.timestamp().difference(widget.view.statistics!.createTime!).inDays.toString() + " days",
                   icon: Icons.update),
               InformationViewCard(
                   title: "Average Time",

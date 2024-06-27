@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/button_list.dart';
-import 'package:flutter_signin_button/button_view.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:observerit/core/exceptions/AuthException.dart';
 import 'package:observerit/core/services/AuthService.dart';
@@ -13,6 +11,7 @@ import 'package:observerit/shared/widgets/Dialog/DefaultDialog.dart';
 import 'package:observerit/shared/widgets/Dialog/LoadingDialog.dart';
 import 'package:observerit/shared/widgets/Inputs/AppInput.dart';
 import 'package:observerit/views/RegisterScreen/SignUpValidators.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -118,28 +117,36 @@ class LoginScreen extends StatelessWidget {
                         text: 'Sign Up',
                       ),
                       SizedBox(height: 40),
-                      SignInButton(
-                        padding: EdgeInsets.all(0),
-                        Buttons.Google,
-                        onPressed: () async {
-                          try {
-                            GoogleSignInAuthentication? userGoogle = await authService.authByGoogle();
-                            if (userGoogle != null) {
-                              LoadingDialog.build(context, "Loading User Information");
-                              UserObserverIt user = await authService.loginByGoogle(userGoogle);
+                      Container(
+                        width: MediaQuery.sizeOf(context).width,
+                        padding: EdgeInsets.symmetric(horizontal: 32),
+                        child: SignInButton(
+                          text: "Login with Google",
+                          Buttons.google,
+                          onPressed: () async {
+                            try {
+                              GoogleSignInAuthentication? userGoogle = await authService.authByGoogle();
+                              if (userGoogle != null) {
+
+                                bool loadingDialog = true;
+                                LoadingDialog.build(context, "Loading User Information").then((value) => {
+                                  loadingDialog = false
+                                });
+                                UserObserverIt user = await authService.loginByGoogle(userGoogle);
+
+                                if (loadingDialog) Navigator.of(context).pop();
+
+                                localStorage.storageValueJSON('user',user.toJson());
+                                Navigator.pushReplacementNamed(context, "/");
+                              }
+
+                            } on AuthException {
 
                               Navigator.of(context).pop();
-
-                              localStorage.storageValueJSON('user',user.toJson());
-                              await Navigator.pushReplacementNamed(context, "/");
+                              DefaultDialog.build(context, 'Error to Sign In', "Something went wrong when logging into Google, try again!");
                             }
-
-                          } on AuthException {
-
-                            Navigator.of(context).pop();
-                            DefaultDialog.build(context, 'Error to Sign In', "Something went wrong when logging into Google, try again!");
-                          }
-                        },
+                          },
+                        ),
                       ),
                     ],
                   ),

@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
             future: fetchViews,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting ||
-                  snapshot.connectionState == ConnectionState.none) {
+                  snapshot.connectionState == ConnectionState.none)  {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
