@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:observerit/core/services/AuthService.dart';
+import 'package:observerit/core/services/LocalStorage.dart';
 import 'package:observerit/entities/User.dart';
 
 class SideMenu extends StatelessWidget {
@@ -11,12 +12,15 @@ class SideMenu extends StatelessWidget {
 
   SideMenu({super.key, required this.user, required this.selectedMenu});
 
+  AuthService authService = AuthService();
+  LocalStorage localStorage = LocalStorage();
+
   @override
   Widget build(BuildContext context) {
 
     Color color = Theme.of(context).primaryColor;
     Color tileColor = Theme.of(context).primaryColorDark;
-    AuthService authService = AuthService();
+
     return SafeArea(
       child: Drawer(
         child: ListView(
@@ -67,6 +71,7 @@ class SideMenu extends StatelessWidget {
               leading: Icon(Icons.exit_to_app),
               title: Text("Log out"),
               onTap: () {
+                localStorage.removeKeyJSON('user');
                 authService.logout();
                 Navigator.of(context).pushReplacementNamed('/login');
                 },

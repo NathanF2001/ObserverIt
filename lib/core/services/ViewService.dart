@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:observerit/core/exceptions/ViewException.dart';
+import 'package:observerit/entities/Agent.dart';
 import 'package:observerit/entities/Request.dart';
 import 'package:observerit/entities/StatisticsView.dart';
 import 'package:observerit/entities/User.dart';
@@ -29,6 +30,19 @@ class ViewObserverItService {
 
           return StatisticsView.fromJson({
             ...snapshotData,
+            "average": double.parse(snapshotData['average'].toString()),
+            "id": snapshot.docs.first.reference
+          });
+        });
+
+        Agent? agent = await view.reference.collection('agent').get().then((snapshot) {
+          if (snapshot.docs.isEmpty) return null;
+
+          final snapshotData = snapshot.docs.first.data();
+          snapshotData['lastUpdate'] = snapshotData['lastUpdate'].toDate();
+
+          return Agent.fromJson({
+            ...snapshotData,
             "id": snapshot.docs.first.reference
           });
         });
@@ -40,7 +54,8 @@ class ViewObserverItService {
           "verificationPeriod": dataView['verificationPeriod'],
           "id": view.reference,
           "statistics": statistics,
-          "requests": requests
+          "requests": requests,
+          "agent": agent
         });
       }).toList();
 

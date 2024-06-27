@@ -25,6 +25,34 @@ class AuthService {
     }
   }
 
+  Future<void> sendRecoveringPassword(String email) async {
+    try {
+      await firebaseInstance.sendPasswordResetEmail(email: email);
+
+    } catch (error) {
+      throw const AuthException('Unexpected error to recovering Password');
+    }
+  }
+
+  UserObserverIt? isSinging() {
+    try{
+      User? user = firebaseInstance.currentUser;
+
+      if (user == null) return null;
+
+      return UserObserverIt.fromJson({
+        "username": user.displayName != null ? user.displayName : 'ObserverIt_User',
+        "imageUrl":user.photoURL,
+        "id":user.uid,
+        "email": user.email,
+        "isFromGoogleAuth": user.providerData[0].providerId != 'password'
+      });
+    } catch (error) {
+      print(error);
+      throw const AuthException('Error to get user information');;
+    }
+  }
+
   Future<GoogleSignInAuthentication?> authByGoogle() async{
     try{
       GoogleSignInAccount? user = await this.googleAuth.signIn();
@@ -32,6 +60,7 @@ class AuthService {
       return googleAuth;
     } catch (error) {
       print(error);
+      throw const AuthException('Error to login');;
     }
   }
 

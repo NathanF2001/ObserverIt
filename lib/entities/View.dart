@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:observerit/entities/Agent.dart';
 import 'package:observerit/entities/Request.dart';
 import 'package:observerit/entities/StatisticsView.dart';
 
@@ -11,6 +12,7 @@ class ViewObserverIt {
   DateTime? nextExecution;
   List<Request>? requests;
   StatisticsView? statistics;
+  Agent? agent;
 
   ViewObserverIt({this.alias, this.id, this.url, this.verificationPeriod, this.requests, this.statistics});
 
@@ -21,6 +23,7 @@ class ViewObserverIt {
     verificationPeriod = json['verificationPeriod'];
     requests = json['requests'];
     statistics = json['statistics'];
+    agent = json['agent'];
     creationTime = json['creationTime'] != null ? json['creationTime'] : DateTime.timestamp();
     nextExecution = json['nextExecution'] != null ? json['nextExecution'] : DateTime.timestamp();
   }
@@ -35,6 +38,7 @@ class ViewObserverIt {
     data['statistics'] = this.statistics;
     data['creationTime'] = this.creationTime;
     data['nextExecution'] = this.nextExecution;
+    data['agent'] = this.agent;
     return data;
   }
 }

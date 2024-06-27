@@ -19,7 +19,11 @@ class LocalStorage {
     this.prefs!.setString(key, jsonEncode(value));
   }
 
-  getValueJSON(String key) {
+  removeKeyJSON(String key) {
+    this.prefs!.remove(key);
+  }
+
+  Map<String, dynamic> getValueJSON(String key) {
     final value = this.prefs!.getString(key);
     if (value != null) {
       return jsonDecode(value);

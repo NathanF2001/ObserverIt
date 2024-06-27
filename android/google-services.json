@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "567891315079",
+    "project_id": "observerit",
+    "storage_bucket": "observerit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:567891315079:android:7563fd283edadd9c0aab22",
+        "android_client_info": {
+          "package_name": "com.observerit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "567891315079-9t3fnt69loj689fh3ne5sjuh2ujvm9v0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.observerit",
+            "certificate_hash": "0347160d4f8a253460ee8469bc5eea023b6c1080"
+          }
+        },
+        {
+          "client_id": "567891315079-d0p0ul899lgkkmpnmijjlt9m5ipihge4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnX20FbhCoytmBgmCh0UhqChtfrryfd2M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "567891315079-d0p0ul899lgkkmpnmijjlt9m5ipihge4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "567891315079-esoivtfahbc0vnv76giqp4rn0oc912kc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.observerit"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

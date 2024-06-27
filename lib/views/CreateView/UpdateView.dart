@@ -117,9 +117,6 @@ class _UpdateViewState extends State<UpdateView> {
                     SizedBox(height: 20),
                     DropdownButtonFormField(
                       onChanged: (value) {
-                        print(initialTypePeriod);
-                        print(initialPeriod);
-                        print(initialAlias);
                         periodTypeControl.text = value;
                       },
                       value: periodTypeControl.text,

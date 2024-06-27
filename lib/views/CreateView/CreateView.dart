@@ -189,7 +189,7 @@ class _CreateViewState extends State<CreateView> {
                                 "nextExecution": DateTime.timestamp().add(Duration(hours: totalHoursPeriod)),
                                 "requests": [
                                   Request.fromJson({
-                                    "status": urlResponse!.statusCode == 200
+                                    "status": urlResponse!.statusCode.toString()[0] == '2'
                                         ? "Available"
                                         : "Error",
                                     "date": urlResponse!.runDate,

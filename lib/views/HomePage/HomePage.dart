@@ -10,7 +10,6 @@ import 'package:observerit/views/HomePage/SideMenu.dart';
 import 'package:observerit/views/HomePage/widgets/CardView.dart';
 
 class HomePage extends StatefulWidget {
-
   HomePage({super.key});
 
   @override
@@ -25,22 +24,20 @@ class _HomePageState extends State<HomePage> {
 
   bool firstLoad = true;
 
-
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     LocalStorage localStorage = LocalStorage();
 
     user = UserObserverIt.fromJson(localStorage.getValueJSON('user'));
 
     if (firstLoad) {
-      fetchViews = viewObserverItService.getViewFromUser(user!).then( (response) {
+      fetchViews =
+          viewObserverItService.getViewFromUser(user!).then((response) {
         views = response;
       });
 
@@ -49,11 +46,11 @@ class _HomePageState extends State<HomePage> {
 
     _updateViews() {
       setState(() {
-        fetchViews = viewObserverItService.getViewFromUser(user!).then( (response) {
+        fetchViews =
+            viewObserverItService.getViewFromUser(user!).then((response) {
           views = response;
         });
       });
-
     }
 
     return SafeArea(
@@ -68,7 +65,8 @@ class _HomePageState extends State<HomePage> {
           color: Colors.white,
           iconSize: 20,
           style: ButtonStyle(
-            backgroundColor: MaterialStateColor.resolveWith((states) => Theme.of(context).primaryColor),
+            backgroundColor: MaterialStateColor.resolveWith(
+                (states) => Theme.of(context).primaryColor),
           ),
           onPressed: () async {
             ViewObserverIt? view = await Navigator.of(context).push(
@@ -76,39 +74,51 @@ class _HomePageState extends State<HomePage> {
                 builder: (context) => CreateView(user: user!),
               ),
             );
-      
+
             if (view != null) {
               setState(() {
-                views = [view,...views];
+                views = [view, ...views];
               });
-              DefaultDialog.build(context, "Created", "Your View has been created successfully!");
+              DefaultDialog.build(context, "Created",
+                  "Your View has been created successfully!");
             }
           },
         ),
-        drawer: SideMenu(user: user!, selectedMenu: 'views',),
+        drawer: SideMenu(
+          user: user!,
+          selectedMenu: 'views',
+        ),
         body: FutureBuilder(
             future: fetchViews,
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting || snapshot.connectionState == ConnectionState.none) {
+              if (snapshot.connectionState == ConnectionState.waiting ||
+                  snapshot.connectionState == ConnectionState.none) {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
               } else {
-                if (views.length == 0) {
-                  return Expanded(
-                    child: Center(
-                      child: Text("No Views", style: TextStyle(fontSize: 24, color: Colors.grey),),
-                    ),
-                  );
-                } else {
-                  return ListView(
-                    children: [
-                      SizedBox(height: 20,),
-                      ...views.map((view) => CardView(view: view, updateViews: _updateViews))
-                    ],
-                  );
-                }
-
+                return RefreshIndicator(
+                  onRefresh: () async => await _updateViews(),
+                  child: ListView.builder(
+                    itemCount: views.length,
+                    itemBuilder: (context, index) {
+                      if (views.length == 0) {
+                        return Container(
+                          child: Center(
+                            child: Text(
+                              "No Views",
+                              style:
+                                  TextStyle(fontSize: 24, color: Colors.grey),
+                            ),
+                          ),
+                        );
+                      } else {
+                        ViewObserverIt view = views[index];
+                        return CardView(view: view, updateViews: _updateViews);
+                      }
+                    },
+                  ),
+                );
               }
             }),
       ),

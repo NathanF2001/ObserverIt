@@ -110,7 +110,7 @@ class _RequestHistoryStatisticsState extends State<RequestHistoryStatistics> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Response Time",
+                        "Content Agent",
                         textAlign: TextAlign.start,
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
@@ -195,7 +195,7 @@ class _RequestHistoryStatisticsState extends State<RequestHistoryStatistics> {
                           showTitles: true,
                           getTitlesWidget: leftTitleWidgets,
                           reservedSize: 40,
-                          interval: (((peakTime!.toDouble() + range!*0.15) - ( minimumTime!.toDouble() - range!*0.25)) ~/ 3).toDouble(),
+                          interval: requests.length > 1 ? (((peakTime!.toDouble() + range!*0.15) - ( minimumTime!.toDouble() - range!*0.25)) ~/ 3).toDouble() : 1,
                         ),
                       ),
                       topTitles: const AxisTitles(

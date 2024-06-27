@@ -74,7 +74,7 @@ class LoginScreen extends StatelessWidget {
                           padding: EdgeInsets.only(left: 30),
                           child: InkWell(
                             onTap: () {
-                              DefaultDialog.build(context, "Not Available", "Feature not allowed");
+                              Navigator.of(context).pushNamed("/forgot-password");
                             },
                             child: Text(
                                 'Forgot Password ?'
@@ -119,19 +119,23 @@ class LoginScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 40),
                       SignInButton(
+                        padding: EdgeInsets.all(0),
                         Buttons.Google,
                         onPressed: () async {
                           try {
                             GoogleSignInAuthentication? userGoogle = await authService.authByGoogle();
-                            LoadingDialog.build(context, "Loading User Information");
-                            UserObserverIt user = await authService.loginByGoogle(userGoogle);
+                            if (userGoogle != null) {
+                              LoadingDialog.build(context, "Loading User Information");
+                              UserObserverIt user = await authService.loginByGoogle(userGoogle);
 
-                            Navigator.of(context).pop();
+                              Navigator.of(context).pop();
 
-                            localStorage.storageValueJSON('user',user.toJson());
+                              localStorage.storageValueJSON('user',user.toJson());
+                              await Navigator.pushReplacementNamed(context, "/");
+                            }
 
-                            await Navigator.pushReplacementNamed(context, "/");
                           } on AuthException {
+
                             Navigator.of(context).pop();
                             DefaultDialog.build(context, 'Error to Sign In', "Something went wrong when logging into Google, try again!");
                           }

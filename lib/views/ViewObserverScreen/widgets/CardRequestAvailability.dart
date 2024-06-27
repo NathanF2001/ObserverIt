@@ -51,7 +51,7 @@ class CardRequestAvailability extends StatelessWidget {
                 ),
               ),
               AvailabilityView(requests: view.requests!),
-              ...view.requests!.sublist(0, 4).map(
+              ...view.requests!.sublist(0, view.requests!.length > 4 ? 4 : view.requests!.length).map(
                     (request) => Container(
                       decoration: const BoxDecoration(
                           border: Border(

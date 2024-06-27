@@ -15,6 +15,7 @@ import 'dart:math';
 import 'package:observerit/shared/widgets/Dialog/DefaultDialog.dart';
 import 'package:observerit/shared/widgets/Dialog/LoadingDialog.dart';
 import 'package:observerit/views/CreateView/UpdateView.dart';
+import 'package:observerit/views/ViewObserverScreen/widgets/AgentRequestCard.dart';
 import 'package:observerit/views/ViewObserverScreen/widgets/CardRequestAvailability.dart';
 import 'package:observerit/views/ViewObserverScreen/widgets/CardUrlView.dart';
 import 'package:observerit/views/ViewObserverScreen/widgets/RequestHistoryStatistics.dart';
@@ -124,7 +125,7 @@ class _ViewObserverScreenState extends State<ViewObserverScreen> {
                       UrlResponse urlResponse = await makeRequest(context);
 
                       Request request = Request.fromJson({
-                        "status": urlResponse.statusCode == 200
+                        "status": urlResponse.statusCode.toString()[0] == "2"
                             ? "Available"
                             : "Error",
                         "date": urlResponse.runDate,
@@ -147,6 +148,8 @@ class _ViewObserverScreenState extends State<ViewObserverScreen> {
                 ),
               ),
               CardUrlView(view: viewObserverIt),
+              SizedBox(height: 20,),
+              AgentRequestCard(view: viewObserverIt,),
               SizedBox(height: 20,),
               CardRequestAvailability(view: viewObserverIt,),
               SizedBox(height: 20,),

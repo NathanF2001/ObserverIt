@@ -11,17 +11,19 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await LocalStorage().loadPreferences();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Login App',
-      initialRoute: '/login',
+      initialRoute: "/splash",
       routes: loadRoutes(context),
       theme: ObserverItTheme.lightTheme,
     );
