@@ -110,7 +110,7 @@ class _RequestHistoryStatisticsState extends State<RequestHistoryStatistics> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Content Agent",
+                        "History",
                         textAlign: TextAlign.start,
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
@@ -146,7 +146,7 @@ class _RequestHistoryStatisticsState extends State<RequestHistoryStatistics> {
             ),
 
             Container(
-              height: 300,
+              height: 325,
               padding: EdgeInsets.all(16),
               child: LineChart(
                   LineChartData(
@@ -183,6 +183,7 @@ class _RequestHistoryStatisticsState extends State<RequestHistoryStatistics> {
                       show: true,
                       bottomTitles: AxisTitles(
                         axisNameWidget: Text("Period"),
+                        axisNameSize: 20,
                         drawBelowEverything: true,
                         sideTitles: SideTitles(
                           showTitles: false,
@@ -194,7 +195,7 @@ class _RequestHistoryStatisticsState extends State<RequestHistoryStatistics> {
                         sideTitles: SideTitles(
                           showTitles: true,
                           getTitlesWidget: leftTitleWidgets,
-                          reservedSize: 40,
+                          reservedSize: 50,
                           interval: requests.length > 1 ? (((peakTime!.toDouble() + range!*0.15) - ( minimumTime!.toDouble() - range!*0.25)) ~/ 3).toDouble() : 1,
                         ),
                       ),

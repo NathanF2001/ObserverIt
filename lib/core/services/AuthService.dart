@@ -59,8 +59,7 @@ class AuthService {
       GoogleSignInAuthentication? googleAuth = await user?.authentication;
       return googleAuth;
     } catch (error) {
-      print(error);
-      throw const AuthException('Error to login');;
+      throw AuthException(error.toString());
     }
   }
 
@@ -82,6 +81,7 @@ class AuthService {
         "isFromGoogleAuth": true
       });
     } catch (error) {
+      print(error);
       throw const AuthException('Error to login');
     }
   }

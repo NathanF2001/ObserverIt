@@ -81,96 +81,105 @@ class _ListRequestPageState extends State<ListRequestPage> {
           foregroundColor: Colors.white,
           backgroundColor: Theme.of(context).primaryColor,
         ),
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          child: Column(
-            children: [
-              Table(
-                columnWidths: const <int, TableColumnWidth>{
-                  0: FlexColumnWidth(),
-                  1: FlexColumnWidth(),
-                  2: IntrinsicColumnWidth(),
-                },
-                children: [
-                  TableRow(children: [
-                    Container(
-                      height: 20,
-                      child: const Text(
-                        textAlign: TextAlign.center,
-                        "Date",
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w800, fontSize: 18),
-                      ),
-                    ),
-                    Container(
-                      child: const Text(
-                        textAlign: TextAlign.center,
-                        "Time",
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w800, fontSize: 18),
-                      ),
-                    ),
-                    Container(
-                        child: const Text(
-                      "Status",
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w800, fontSize: 18),
-                      textAlign: TextAlign.center,
-                    ))
-                  ]),
-                  ...requests.map(
-                    (request) => TableRow(
-                        decoration: const BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    width: 1, color: Colors.black12))),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: Column(
+              children: [
+                Table(
+          
+                  columnWidths: const <int, TableColumnWidth>{
+                    0: FlexColumnWidth(),
+                    1: FlexColumnWidth(),
+                    2: IntrinsicColumnWidth(),
+                  },
+          
+                  children: [
+                    TableRow(
+          
                         children: [
                           Container(
                             height: 40,
-                            child: Align(
-                              child: Text(
-                                formatData(request.date!),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.black54),
-                              ),
+                            child: const Text(
+                              textAlign: TextAlign.center,
+                              "Date",
+                              style: TextStyle(
+                                  color: Colors.black, fontWeight: FontWeight.w800, fontSize: 18),
                             ),
                           ),
                           Container(
                             height: 40,
-                            child: Align(
-                              child: Text(
-                                "${request.time} ms",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.black54),
-                              ),
+                            child: const Text(
+                              textAlign: TextAlign.center,
+                              "Time",
+                              style: TextStyle(
+                                  color: Colors.black, fontWeight: FontWeight.w800, fontSize: 18),
                             ),
                           ),
                           Container(
-                            height: 40,
-                            child: Align(child: StatusPill(status: request.status!)),
-                          )
+                              height: 40,
+                              child: const Text(
+                                "Status",
+                                style: TextStyle(
+                                    color: Colors.black, fontWeight: FontWeight.w800, fontSize: 18),
+                                textAlign: TextAlign.center,
+                              ))
                         ]),
+                    ...requests.map(
+                      (request) => TableRow(
+                          decoration: const BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1, color: Colors.black12))),
+                          children: [
+                            Container(
+                              height: 40,
+                              child: Align(
+                                child: Text(
+                                  formatData(request.date!),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.black54),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 40,
+                              child: Align(
+                                child: Text(
+                                  "${request.time} ms",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.black54),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 40,
+                              child: Align(child: StatusPill(status: request.status!)),
+                            )
+                          ]),
+                    ),
+                  ],
+                ),
+
+                _hasNext && !_isfetchingRequests
+                    ? Container(
+                  padding: EdgeInsets.symmetric(vertical: 32),
+                  child: DefaultButton(
+                    text: "Load more Requests",
+                    onPressed: () {
+                      _isfetchingRequests = true;
+                      fetchRequests();
+                    },
                   ),
-                ],
-              ),
-              _hasNext && !_isfetchingRequests
-                  ? Padding(
-                      padding: EdgeInsets.symmetric(vertical: 32),
-                      child: DefaultButton(
-                        text: "Load more Requests",
-                        onPressed: () {
-                          _isfetchingRequests = true;
-                          fetchRequests();
-                        },
-                      ),
-                    )
-                  : Container(),
-              _isfetchingRequests
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : Container(),
-            ],
+                )
+                    : Container(),
+                _isfetchingRequests
+                    ? Center(
+                  child: CircularProgressIndicator(),
+                )
+                    : Container(),
+              ],
+            ),
           ),
         ),
       ),

@@ -48,7 +48,7 @@ class SideMenu extends StatelessWidget {
               selectedColor: Colors.white,
               selectedTileColor: tileColor,
               leading: Icon(Icons.analytics_outlined),
-              title: Text("Views"),
+              title: Text("Observations"),
               onTap: () {
                 if (ModalRoute.of(context)!.settings.name != "/") {
                   Navigator.of(context).pushReplacementNamed('/');

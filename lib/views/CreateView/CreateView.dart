@@ -50,7 +50,7 @@ class _CreateViewState extends State<CreateView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("View"),
+        title: Text("Observation"),
         foregroundColor: Colors.white,
         backgroundColor: Theme.of(context).primaryColor,
       ),
@@ -63,11 +63,11 @@ class _CreateViewState extends State<CreateView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Create View",
+                    "Create Observation",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "Configure the initial settings for your view",
+                    "Configure the initial settings for your observation",
                     style: TextStyle(
                         fontSize: 14,
                         fontStyle: FontStyle.italic,
@@ -84,14 +84,14 @@ class _CreateViewState extends State<CreateView> {
                   children: [
                     AppInput(
                       labelText: "Alias",
-                      hintText: "Type your View Alias",
+                      hintText: "Type your Observation Alias",
                       validator: CreateViewValidators.aliasValidator,
                       controller: aliasControl,
                     ),
                     SizedBox(height: 20),
                     AppInput(
                       labelText: "Url",
-                      hintText: "Type your View Url",
+                      hintText: "Type your Observation Url",
                       controller: urlControl,
                       validator: CreateViewValidators.urlValidator,
                       onChanged: (value) {

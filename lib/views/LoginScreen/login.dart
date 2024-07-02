@@ -124,26 +124,33 @@ class LoginScreen extends StatelessWidget {
                           text: "Login with Google",
                           Buttons.google,
                           onPressed: () async {
+                            bool loadingDialog = true;
                             try {
+                              LoadingDialog.build(context, "Loading User Information").then((value) => {
+                                loadingDialog = false
+                              });
                               GoogleSignInAuthentication? userGoogle = await authService.authByGoogle();
                               if (userGoogle != null) {
 
-                                bool loadingDialog = true;
-                                LoadingDialog.build(context, "Loading User Information").then((value) => {
-                                  loadingDialog = false
-                                });
+
                                 UserObserverIt user = await authService.loginByGoogle(userGoogle);
 
-                                if (loadingDialog) Navigator.of(context).pop();
+                                if (loadingDialog) {
+                                  Navigator.of(context).pop();
+                                }
 
                                 localStorage.storageValueJSON('user',user.toJson());
                                 Navigator.pushReplacementNamed(context, "/");
+                              } else {
+                                if (loadingDialog) {
+                                  Navigator.of(context).pop();
+                                }
                               }
 
-                            } on AuthException {
+                            } on AuthException catch (error) {
 
-                              Navigator.of(context).pop();
-                              DefaultDialog.build(context, 'Error to Sign In', "Something went wrong when logging into Google, try again!");
+                              if (loadingDialog) Navigator.of(context).pop();
+                              DefaultDialog.build(context, 'Error to Sign In', "Something went wrong when logging into Google, try again!\n Error ${error.message}");
                             }
                           },
                         ),
