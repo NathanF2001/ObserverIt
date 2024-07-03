@@ -57,7 +57,7 @@ class _SplashPageState extends State<SplashPage> {
         height: MediaQuery.sizeOf(context).height,
         child: Container(
           color: Color(0xff6c31cc),
-            child: Image.asset("assets/app-images/LogoPequenoGeral.jpg")
+            child: Image.asset("assets/app-images/LogoPequenoGeral.png")
         ),
       ),
     );
